@@ -1,0 +1,33 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachineInstance
+metadata:
+  name: worker-2
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachineInstance
+spec:
+  domain:
+    cpu:
+      cores: 4
+    resources:
+      requests:
+        memory: 8G
+    devices:
+      disks:
+      - name: osdisk
+        disk: {}
+      - name: cloudinit
+        disk: {}
+  volumes:
+    - name: osdisk
+      persistentVolumeClaim:
+        claimName: worker-2-datavol
+    - name: cloudinit
+      cloudInitNoCloud:
+        userData: |-
+          #cloud-config
+          users:
+            - name: jdg
+              plain_text_password: 'password'
+              sudo: ['ALL=(ALL) NOPASSWD:ALL']
+              ssh-authorized-keys:
+                - ssh-rsa AAAA...

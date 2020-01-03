@@ -1,0 +1,14 @@
+apiVersion: cdi.kubevirt.io/v1alpha1
+kind: DataVolume
+metadata:
+  name: "worker-1-datavol"
+spec:
+  source:
+      http:
+         url: "http://10.193.138.160:8080/debian-9-openstack-amd64.qcow2"
+  pvc:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: "50Gi"
